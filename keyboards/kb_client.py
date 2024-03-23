@@ -1,6 +1,5 @@
 from aiogram import types
 
-
 to_the_end = types.InlineKeyboardButton('Доходность к погашению 📈📅', callback_data='To_the_end')
 the_nominal = types.InlineKeyboardButton('Купон относительно номинала 🎫📊', callback_data='The_nominal')
 the_market = types.InlineKeyboardButton('Купон относительно рынка 🎫🛒', callback_data='The_market')

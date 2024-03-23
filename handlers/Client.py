@@ -20,11 +20,14 @@ async def cmd_start(message: types.Message):
     kb.add(*keyboard_dictionary["Стратегии"])
     kb.row(*keyboard_dictionary["Меню настроек"])
     kb.row(*keyboard_dictionary["Прочее"])
+    print(f'Номер сообщения: {message.message_id}\n'
+          f'Данные пользователя: {message.from_user}\n'
+          f'ID чата {message.chat.id}\n'
+          f'Сообщение {message.text}\n')
     await FSMClient.main_menu.set()
     await bot.send_message(chat_id=message.from_user.id,
                            text='Выберите стратегию для сортировки[ ](https://goo.su/VKUr)',
                            reply_markup=kb)
-
 
 # @dp.callback_query_handlers(text='Menu', state='*')
 async def cb_menu(callback: types.CallbackQuery):
