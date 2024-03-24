@@ -2,7 +2,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from bot_telegram import bot
 from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_dictionary
-
+from database.db_insert_change import IC_User_Information
 
 
 class FSMClient(StatesGroup):
@@ -20,11 +20,12 @@ async def cmd_start(message: types.Message):
     kb.add(*keyboard_dictionary["Стратегии"])
     kb.row(*keyboard_dictionary["Меню настроек"])
     kb.row(*keyboard_dictionary["Прочее"])
-    print(f'Номер сообщения: {message.message_id}\n'
-          f'Данные пользователя: {message.from_user}\n'
-          f'ID чата {message.chat.id}\n'
-          f'Сообщение {message.text}\n')
+
+    information_user = (message.from_user.id, message.from_user.first_name, message.from_user.username, 'False')
+    IC_User_Information(information_user)
+
     await FSMClient.main_menu.set()
+    print(f'Приняли состояние main_menu')
     await bot.send_message(chat_id=message.from_user.id,
                            text='Выберите стратегию для сортировки[ ](https://goo.su/VKUr)',
                            reply_markup=kb)
@@ -121,5 +122,6 @@ def register_handlers_client(dp: Dispatcher):
                                        state=(FSMClient.main_menu, '*'))
     dp.register_callback_query_handler(cb_the_market, text='The_market',
                                        state=(FSMClient.main_menu, '*'))
+
     dp.register_callback_query_handler(cb_setting, text='Setting', state=(FSMClient.main_menu, '*'))
     dp.register_callback_query_handler(cb_information, text='Information', state=(FSMClient.main_menu, '*'))

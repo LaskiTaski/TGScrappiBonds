@@ -1,17 +1,17 @@
 from aiogram.utils import executor
 from bot_telegram import dp
 from handlers.Client import register_handlers_client
-
-from database.db_test import connect_db
-from database.db_client import create_table_User_Information
-
+from handlers.Client_settings import register_handlers_settings_client
+from database import db_create, db_test
 
 register_handlers_client(dp)
+register_handlers_settings_client(dp)
 
 async def on_start_up(_):
     print('The bot is running')
-    connect_db()
-    create_table_User_Information()
+    db_test.connect_db()
+    db_create.CT_User_Information()
+    db_create.CT_client_settings()
 
 
 if __name__ == '__main__':
