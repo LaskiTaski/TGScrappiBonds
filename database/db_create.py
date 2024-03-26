@@ -31,27 +31,27 @@ def CT_User_Information():
 
 def CT_client_settings():
     """
-    :param User_ID: ID пользователя который зарегистрировался.
+    :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
     :param repayment: Параметры Доходности к погашению.
-    :param coupon_to_the_nominal: Параметры Доходности купона к номиналу.
-    :param coupon_to_the_market: Параметры Доходности купона к рыночной цене.
-    :param coupon_frequency: Параметры Частоты купона.
-    :param cancellation_days: Параметры Дней до погашения.
-    :param only_for_quarters: Статус квал. True / False
+    :param nominal: Параметры Доходности купона к номиналу.
+    :param market: Параметры Доходности купона к рыночной цене.
+    :param frequency: Параметры Частоты купона.
+    :param days: Параметры Дней до погашения.
+    :param qualification: Статус квал. True / False
     :return:
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         sqlite_create_table_query = '''CREATE TABLE IF NOT EXISTS User_settings (
-                                        User_ID TEXT UNIQUE,
+                                        ID TEXT UNIQUE,
                                         quoting TEXT,
                                         repayment TEXT,
-                                        coupon_to_the_nominal TEXT,
-                                        coupon_to_the_market TEXT,
-                                        coupon_frequency TEXT,
-                                        cancellation_days TEXT,
-                                        only_for_quarters TEXT
+                                        nominal TEXT,
+                                        market TEXT,
+                                        frequency TEXT,
+                                        days TEXT,
+                                        qualification TEXT
                                         );'''
         cursor = sqlite_connection.cursor()
         cursor.execute(sqlite_create_table_query)

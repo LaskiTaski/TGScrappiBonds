@@ -54,19 +54,19 @@ def IC_User_Setting(settings_user):
         cursor = sqlite_connection.cursor()
         user_id = settings_user[0]
         param_setings = settings_user[-1]
-        cursor.execute("SELECT * FROM User_settings WHERE User_ID=?", (user_id,))
+        cursor.execute("SELECT * FROM User_settings WHERE ID=?", (user_id,))
         result = cursor.fetchone()
 
         if result:
-            sqlite_insert_change_with_param = f"""UPDATE User_settings SET User_ID=?, {param_setings}=?"""
+            sqlite_insert_change_with_param = f"""UPDATE User_settings SET ID=?, {param_setings}=?"""
             data_tuple = (user_id, settings_user[1])
-            print(f'UPDATE IC_User_Setting {data_tuple}')
+            print(f'UPDATE IC_User_Setting {data_tuple} {param_setings}')
         else:
             sqlite_insert_change_with_param = f"""INSERT INTO User_settings
-                                  (User_ID, {param_setings})
+                                  (ID, {param_setings})
                                   VALUES (?, ?);"""
             data_tuple = tuple(settings_user[:-1])
-            print(f'INSERT IC_User_Setting {data_tuple}')
+            print(f'INSERT IC_User_Setting {data_tuple} {param_setings}')
 
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()

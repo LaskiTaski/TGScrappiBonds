@@ -1,22 +1,21 @@
 from aiogram import types
 
-to_the_end = types.InlineKeyboardButton('Доходность к погашению 📈📅', callback_data='To_the_end')
-the_nominal = types.InlineKeyboardButton('Купон относительно номинала 🎫📊', callback_data='The_nominal')
-the_market = types.InlineKeyboardButton('Купон относительно рынка 🎫🛒', callback_data='The_market')
+to_the_end = types.InlineKeyboardButton('Доходность к погашению 📈📅', callback_data='Menu_end')
+the_nominal = types.InlineKeyboardButton('Купон относительно номинала 🎫📊', callback_data='Menu_nominal')
+the_market = types.InlineKeyboardButton('Купон относительно рынка 🎫🛒', callback_data='Menu_market')
 
-parameters = types.InlineKeyboardButton('Мои параметры 📋', callback_data='My_Params')
+parameters = types.InlineKeyboardButton('Мои параметры 📋', callback_data='Params')
 
 setting = types.InlineKeyboardButton('Свои настройки ⚙️', callback_data='Setting')
 
 
-stse_to_the_end = types.InlineKeyboardButton("🔸Доходность к погашению🔸", callback_data='STSE_to_the_end')
-stse_the_nominal = types.InlineKeyboardButton('🔸Доходность купона к номиналу🔸', callback_data='STSE_the_nominal')
-stse_the_market = types.InlineKeyboardButton('🔸Доходность купона к рынку🔸', callback_data='STSE_the_market')
-
-stse_quote_bonds = types.InlineKeyboardButton('Котировка облигаций', callback_data='STSE_quote_bonds')
-stse_frequency_coupons = types.InlineKeyboardButton('Частота купона', callback_data='STSE_frequency_coupons')
-stse_days_to_maturity = types.InlineKeyboardButton('Дней до погашения', callback_data='STSE_days_to_maturity')
-stse_your_qualification = types.InlineKeyboardButton('У вас есть статус квал?', callback_data='STSE_your_qualification')
+stse_quoting = types.InlineKeyboardButton('Котировка облигаций', callback_data='STSE_quoting')
+stse_end = types.InlineKeyboardButton("🔸Доходность к погашению🔸", callback_data='STSE_end')
+stse_nominal = types.InlineKeyboardButton('🔸Доходность купона к номиналу🔸', callback_data='STSE_nominal')
+stse_market = types.InlineKeyboardButton('🔸Доходность купона к рынку🔸', callback_data='STSE_market')
+stse_frequency= types.InlineKeyboardButton('Частота купона', callback_data='STSE_frequency')
+stse_days = types.InlineKeyboardButton('Дней до погашения', callback_data='STSE_days')
+stse_qualification = types.InlineKeyboardButton('У вас есть статус квал?', callback_data='STSE_qualification')
 
 
 information = types.InlineKeyboardButton('О нас ℹ️', callback_data='Information')
@@ -28,13 +27,13 @@ go_back_menu = types.InlineKeyboardButton('Главное меню ↩️', call
 keyboard_dictionary = {
     "Стратегии": [to_the_end, the_nominal, the_market],
     "Меню настроек": [setting],
-    "Доходность к погашению": [stse_to_the_end],
-    "Доходность купона к номиналу": [stse_the_nominal],
-    "Доходность купона к рынку": [stse_the_market],
+    "Доходность к погашению": [stse_end],
+    "Доходность купона к номиналу": [stse_nominal],
+    "Доходность купона к рынку": [stse_market],
     "Мои параметры": [parameters],
     "Общие параметры": [
-        stse_quote_bonds, stse_frequency_coupons,
-        stse_days_to_maturity, stse_your_qualification
+        stse_quoting, stse_frequency,
+        stse_days, stse_qualification
         ],
     "Прочее": [information, payment],
     "Вернуться в меню": [go_back_menu]
