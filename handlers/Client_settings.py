@@ -75,6 +75,7 @@ async def cb_setting_nominal(callback: types.CallbackQuery):
                            text='Какую минимальную доходность купона относительно номинала вы хотите получить?',
                            reply_markup=kb)
 
+
 # @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Nominal))
 async def cmd_setting_nominal(message: types.Message):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -88,6 +89,7 @@ async def cmd_setting_nominal(message: types.Message):
     await bot.delete_message(chat_id=message.chat.id,
                              message_id=message.message_id - 1)
 
+
 # @dp.callback_query_handlers(text='STSE_market', state='*')
 async def cb_setting_market(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -98,11 +100,87 @@ async def cb_setting_market(callback: types.CallbackQuery):
                            text='Какую минимальную доходность купона относительно рыночной цены вы хотите получить?',
                            reply_markup=kb)
 
+
 # @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Market))
 async def cmd_setting_market(message: types.Message):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
     settings_user = (message.from_user.id, message.text, 'market')
+    IC_User_Setting(settings_user)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id - 1)
+
+
+# @dp.callback_query_handlers(text='STSE_frequency', state='*')
+async def cb_setting_frequency(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+
+    await FSMClient_settings.STSE_Frequency.set()
+    await bot.send_message(chat_id=callback.from_user.id,
+                           text='Какую минимальную частоту купона вы хотите получить?',
+                           reply_markup=kb)
+
+
+# @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Frequency))
+async def cmd_setting_frequency(message: types.Message):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+    settings_user = (message.from_user.id, message.text, 'frequency')
+    IC_User_Setting(settings_user)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id - 1)
+
+
+# @dp.callback_query_handlers(text='STSE_days', state='*')
+async def cb_setting_days(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+
+    await FSMClient_settings.STSE_Days.set()
+    await bot.send_message(chat_id=callback.from_user.id,
+                           text='Сколько минимум дней до погашения вы хотите получить?',
+                           reply_markup=kb)
+
+
+# @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Days))
+async def cmd_setting_days(message: types.Message):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+    settings_user = (message.from_user.id, message.text, 'days')
+    IC_User_Setting(settings_user)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id)
+
+    await bot.delete_message(chat_id=message.chat.id,
+                             message_id=message.message_id - 1)
+
+
+# @dp.callback_query_handlers(text='STSE_qualification', state='*')
+async def cb_setting_qualification(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+
+    await FSMClient_settings.STSE_Qualification.set()
+    await bot.send_message(chat_id=callback.from_user.id,
+                           text='У вас есть статус квалифицированного инвестора?',
+                           reply_markup=kb)
+
+
+# @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Qualification))
+async def cmd_setting_qualification(message: types.Message):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"], *keyboard_dictionary["Мои параметры"])
+    settings_user = (message.from_user.id, message.text, 'qualification')
     IC_User_Setting(settings_user)
 
     await bot.delete_message(chat_id=message.chat.id,
@@ -127,4 +205,16 @@ def register_handlers_settings_client(dp: Dispatcher):
     dp.register_callback_query_handler(cb_setting_market, text='STSE_market', state='*')
     dp.register_message_handler(cmd_setting_market, content_types=types.ContentTypes.TEXT,
                                 state=FSMClient_settings.STSE_Market)
+
+    dp.register_callback_query_handler(cb_setting_frequency, text='STSE_frequency', state='*')
+    dp.register_message_handler(cmd_setting_frequency, content_types=types.ContentTypes.TEXT,
+                                state=FSMClient_settings.STSE_Frequency)
+
+    dp.register_callback_query_handler(cb_setting_days, text='STSE_days', state='*')
+    dp.register_message_handler(cmd_setting_days, content_types=types.ContentTypes.TEXT,
+                                state=FSMClient_settings.STSE_Days)
+
+    dp.register_callback_query_handler(cb_setting_qualification, text='STSE_qualification', state='*')
+    dp.register_message_handler(cmd_setting_qualification, content_types=types.ContentTypes.TEXT,
+                                state=FSMClient_settings.STSE_Qualification)
 
