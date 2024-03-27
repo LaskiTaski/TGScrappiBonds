@@ -23,13 +23,11 @@ def IC_User_Information(information_user):
         if result:
             sqlite_insert_change_with_param = f"""UPDATE User_information SET NAME=?, USER_NAME=?, ACCESS=? WHERE ID=?"""
             data_tuple = tuple(information_user[1::]) + (user_id,)
-            print(f'UPDATE User_Information {data_tuple}')
         else:
             sqlite_insert_change_with_param = """INSERT INTO User_information
                                   (ID, NAME, USER_NAME, ACCESS)
                                   VALUES (?, ?, ?, ?);"""
             data_tuple = tuple(information_user)
-            print(f'INSERT User_Information {data_tuple}')
 
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()
@@ -60,13 +58,11 @@ def IC_User_Setting(settings_user):
         if result:
             sqlite_insert_change_with_param = f"""UPDATE User_settings SET {param_setings}=? WHERE ID=?"""
             data_tuple = (settings_user[1], user_id)
-            print(f'UPDATE IC_User_Setting {data_tuple} {param_setings}')
         else:
             sqlite_insert_change_with_param = f"""INSERT INTO User_settings
                                   (ID, {param_setings})
                                   VALUES (?, ?);"""
             data_tuple = tuple(settings_user[:-1])
-            print(f'INSERT IC_User_Setting {data_tuple} {param_setings}')
 
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()

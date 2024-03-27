@@ -14,14 +14,11 @@ def RE_User_settings(ID):
         sql_select_query = f"""SELECT * FROM User_settings WHERE ID = ?"""
         cursor.execute(sql_select_query, (ID,))
         params = cursor.fetchall()
-        print("Вывод Информации ", params)
         information_params = {name_table: value_table for name_table, value_table in zip(["ID", "quoting", "repayment",
                                                                                           "nominal", "market",
                                                                                           "frequency", "days",
                                                                                           "qualification"],
-                                                                                         params[0],
-                                                                                         )}
-        print(information_params, 'INFORMATION')
+                                                                                         params[0])}
         cursor.close()
         return information_params
 

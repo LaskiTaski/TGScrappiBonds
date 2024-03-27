@@ -44,7 +44,6 @@ def get_User_settings(from_quoting=0, before_quoting=100,
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         cursor = sqlite_connection.cursor()
-        print("Подключен к SQLite")
 
         sql_select_query = """SELECT * FROM All_Bonds WHERE Котировка_облигации > ? AND Котировка_облигации < ? AND
         Доходность_к_погашению > ? AND Доходность_к_погашению < ? AND
