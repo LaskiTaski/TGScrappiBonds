@@ -2,7 +2,7 @@ from bot_telegram import bot
 from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_dictionary
 from database.db_insert_change import IC_User_Information
-
+from database.db_receive import RE_User_settings
 
 # @dp.message_handler(commands=['start'], state='*')
 async def cmd_start(message: types.Message):
@@ -87,6 +87,22 @@ async def cb_setting(callback: types.CallbackQuery):
     await callback.answer(text='Этот раздел предназначен для детальной настройки⚠️', show_alert=True)
 
 
+# @dp.callback_query_handlers(text='Params', state='*')
+async def cb_params(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.row(*keyboard_dictionary["Вернуться в меню"])
+    information_params = RE_User_settings(callback.from_user.id,)
+    information_params = {name_table: value_table if value_table not in ('', None) else '—' for name_table, value_table in information_params.items()}
+    await callback.message.edit_text(f'*Котировка облигаций:* \n🔸_{information_params["quoting"]}_\n\n'
+                                     f'*Доходность к погашению:* \n🔸_{information_params["repayment"]}_\n\n'
+                                     f'*Доходность купона относительно номинала:* \n🔸_{information_params["nominal"]}_\n\n'
+                                     f'*Доходность купона относительно рыночной цены:* \n🔸_{information_params["market"]}_\n\n'
+                                     f'*Частота купона:* \n🔸_{information_params["frequency"]}_\n\n'
+                                     f'*Дней до погашения:* \n🔸_{information_params["days"]}_\n\n'
+                                     f'*Если ли у вас статус квал. инвестора:* \n🔸_{information_params["qualification"]}_\n\n',
+                                     reply_markup=kb)
+
+
 # @dp.callback_query_handlers(text='Information', state='*')
 async def cb_information(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=1)
@@ -103,4 +119,5 @@ def register_handlers_client(dp: Dispatcher):
     dp.register_callback_query_handler(cb_the_market, text='Menu_market', state='*')
 
     dp.register_callback_query_handler(cb_setting, text='Setting', state='*')
+    dp.register_callback_query_handler(cb_params, text='Params', state='*')
     dp.register_callback_query_handler(cb_information, text='Information', state='*')

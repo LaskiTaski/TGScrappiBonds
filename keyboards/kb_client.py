@@ -6,7 +6,7 @@ the_market = types.InlineKeyboardButton('Купон относительно р�
 
 parameters = types.InlineKeyboardButton('Мои параметры 📋', callback_data='Params')
 
-setting = types.InlineKeyboardButton('Свои настройки ⚙️', callback_data='Setting')
+setting = types.InlineKeyboardButton('Детальные настройки ⚙️', callback_data='Setting')
 
 
 stse_quoting = types.InlineKeyboardButton('Котировка облигаций', callback_data='STSE_quoting')

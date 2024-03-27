@@ -29,7 +29,7 @@ def CT_User_Information():
         if (sqlite_connection):
             sqlite_connection.close()
 
-def CT_client_settings():
+def CT_User_settings():
     """
     :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
