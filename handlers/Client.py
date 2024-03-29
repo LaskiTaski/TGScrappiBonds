@@ -72,7 +72,7 @@ async def cb_setting(callback: types.CallbackQuery):
     kb.add(*keyboard_menu["Общие параметры"])
     kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
     await callback.message.edit_text('[Ознакомиться с параметрами для сортировки бумаг](https://telegra.ph/Kak-nastroit-parametry-03-19)', reply_markup=kb)
-    await callback.answer(text='Этот раздел предназначен для детальной настройки⚠️', show_alert=True)
+    await callback.answer(text='Этот раздел предназначен для опытных пользователей⚠️', show_alert=True)
 
 
 # @dp.callback_query_handlers(text='Params', state='*')

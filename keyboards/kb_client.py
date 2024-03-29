@@ -9,12 +9,12 @@ parameters = types.InlineKeyboardButton('Мои параметры 📋', callba
 setting = types.InlineKeyboardButton('Детальные настройки ⚙️', callback_data='Setting')
 
 
-stse_quoting = types.InlineKeyboardButton('Котировка облигаций', callback_data='STSE_quoting')
-stse_end = types.InlineKeyboardButton("🔸Доходность к погашению🔸", callback_data='STSE_end')
+stse_quoting = types.InlineKeyboardButton(f'Котировка \nоблигаций', callback_data='STSE_quoting')
+stse_end = types.InlineKeyboardButton("🔸Доходность к погашению бумаги🔸", callback_data='STSE_end')
 stse_nominal = types.InlineKeyboardButton('🔸Доходность купона к номиналу🔸', callback_data='STSE_nominal')
 stse_market = types.InlineKeyboardButton('🔸Доходность купона к рынку🔸', callback_data='STSE_market')
-stse_frequency = types.InlineKeyboardButton('Частота купона', callback_data='STSE_frequency')
-stse_days = types.InlineKeyboardButton('Дней до погашения', callback_data='STSE_days')
+stse_frequency = types.InlineKeyboardButton('Частота \nкупона', callback_data='STSE_frequency')
+stse_days = types.InlineKeyboardButton('Дней до \nпогашения', callback_data='STSE_days')
 stse_qualification = types.InlineKeyboardButton('У вас есть статус квал?', callback_data='STSE_qualification')
 
 
