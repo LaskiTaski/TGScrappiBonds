@@ -10,15 +10,22 @@ def RE_User_settings(ID):
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         cursor = sqlite_connection.cursor()
-        print(ID)
         sql_select_query = f"""SELECT * FROM User_settings WHERE ID = ?"""
         cursor.execute(sql_select_query, (ID,))
         params = cursor.fetchall()
-        information_params = {name_table: value_table for name_table, value_table in zip(["ID", "quoting", "repayment",
-                                                                                          "nominal", "market",
-                                                                                          "frequency", "days",
-                                                                                          "qualification"],
-                                                                                         params[0])}
+        if params:
+            information_params = {name_table: value_table for name_table, value_table in zip(["ID", "quoting", "repayment",
+                                                                                              "nominal", "market",
+                                                                                              "frequency", "days",
+                                                                                              "qualification"],
+                                                                                             params[0])}
+        else:
+            information_params = {name_table: value_table for name_table, value_table in
+                                  zip(["ID", "quoting", "repayment",
+                                       "nominal", "market",
+                                       "frequency", "days",
+                                       "qualification"],
+                                      ['—', '—', '—', '—', '—', '—', '—', '—'])}
         cursor.close()
         return information_params
 
