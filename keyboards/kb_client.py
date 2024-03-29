@@ -24,7 +24,7 @@ payment = types.InlineKeyboardButton('Оплатить 💳', callback_data='Pay
 go_back_menu = types.InlineKeyboardButton('Главное меню ↩️', callback_data='Menu')
 
 
-keyboard_dictionary = {
+keyboard_menu = {
     "Стратегии": [to_the_end, the_nominal, the_market],
     "Меню настроек": [setting],
     "Доходность к погашению": [stse_end],
