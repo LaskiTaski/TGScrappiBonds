@@ -10,8 +10,8 @@ register_handlers_settings_client(dp)
 async def on_start_up(_):
     print('The bot is running')
     db_test.connect_db()
-    db_create.CT_User_Information()
-    db_create.CT_User_settings()
+    # db_create.CT_User_Information()
+    # db_create.CT_User_settings()
 
 
 if __name__ == '__main__':
