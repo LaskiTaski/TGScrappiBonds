@@ -136,33 +136,33 @@ async def cmd_setting_frequency(callback: types.CallbackQuery):
     settings_user = (callback.from_user.id, callback.data, 'frequency')
     IC_User_Setting(settings_user)
     await callback.message.edit_text(
-        'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_653a2970f354720523add32c_653a2d933d07985def20ad0c/scale_1200)',
+        'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39kZiS)',
         reply_markup=kb)
 
 
 # @dp.callback_query_handlers(text='STSE_days', state='*')
 async def cb_setting_days(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
+    kb.add(*keyboard_settings["Погашение ДО"])
+    kb.row(*keyboard_settings["Погашение ОТ"])
     kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
-
     await FSMClient_settings.STSE_Days.set()
-    await bot.send_message(chat_id=callback.from_user.id,
-                           text='Сколько минимум дней до погашения вы хотите получить?',
-                           reply_markup=kb)
+    await callback.message.edit_text(
+        'Выберите количество дней до погашения облигации.[ ](https://clck.ru/39m3HL)',
+        reply_markup=kb)
+    print('OKKK')
 
 
-# @dp.message_handler(content_types=types.ContentTypes.TEXT, state=(FSMClient_settings.STSE_Days))
-async def cmd_setting_days(message: types.Message):
+# @dp.callback_query_handlers(lambda x: x.data in ['< 7', '< 31', '< 95', '< 180', '< 365', '> 365'],
+#                             state=(FSMClient_settings.STSE_Days,))
+async def cmd_setting_days(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
-    settings_user = (message.from_user.id, message.text, 'days')
+    settings_user = (callback.from_user.id, callback.data, 'days')
     IC_User_Setting(settings_user)
-
-    await bot.delete_message(chat_id=message.chat.id,
-                             message_id=message.message_id)
-
-    await bot.delete_message(chat_id=message.chat.id,
-                             message_id=message.message_id - 1)
+    await callback.message.edit_text(
+        'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39m3HL)',
+        reply_markup=kb)
 
 
 # @dp.callback_query_handlers(text='STSE_qualification', state='*')
@@ -210,8 +210,9 @@ def register_handlers_settings_client(dp: Dispatcher):
                                        state=(FSMClient_settings.STSE_Frequency,))
 
     dp.register_callback_query_handler(cb_setting_days, text='STSE_days', state='*')
-    dp.register_message_handler(cmd_setting_days, content_types=types.ContentTypes.TEXT,
-                                state=FSMClient_settings.STSE_Days)
+    dp.register_callback_query_handler(cmd_setting_days,
+                                       lambda x: x.data in ['< 7', '< 31', '< 95', '< 180', '< 365', '> 365'],
+                                       state=(FSMClient_settings.STSE_Days,))
 
     dp.register_callback_query_handler(cb_setting_qualification, text='STSE_qualification', state='*')
     dp.register_callback_query_handler(cmd_setting_qualification, lambda x: x.data in ['Да', 'Нет'],
