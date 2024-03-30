@@ -1,7 +1,7 @@
 import sqlite3
 from bot_telegram import ABSOLUTE_PATH
 
-def CT_User_Information():
+def CT_UserInformation():
     """
     Ф-ия создающая таблицу внутри базы данных, подключение к которой происходит через абсолютный путь к файлу.
     Создаёт колонки хранящие в себе:
@@ -29,7 +29,7 @@ def CT_User_Information():
         if (sqlite_connection):
             sqlite_connection.close()
 
-def CT_User_settings():
+def CT_UserSettings():
     """
     :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
@@ -51,6 +51,41 @@ def CT_User_settings():
                                         market TEXT,
                                         frequency TEXT,
                                         days TEXT,
+                                        qualification TEXT
+                                        );'''
+        cursor = sqlite_connection.cursor()
+        cursor.execute(sqlite_create_table_query)
+        sqlite_connection.commit()
+        cursor.close()
+    except sqlite3.Error as error:
+        print("Ошибка в create_client_settings", error)
+    finally:
+        if (sqlite_connection):
+            sqlite_connection.close()
+
+
+def CT_UserClearSettings():
+    """
+    :param ID: ID пользователя который зарегистрировался.
+    :param quoting: Параметры котировок облигаций.
+    :param repayment: Параметры Доходности к погашению.
+    :param nominal: Параметры Доходности купона к номиналу.
+    :param market: Параметры Доходности купона к рыночной цене.
+    :param frequency: Параметры Частоты купона.
+    :param days: Параметры Дней до погашения.
+    :param qualification: Статус квал. True / False
+    :return:
+    """
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        sqlite_create_table_query = '''CREATE TABLE IF NOT EXISTS User_clear_settings (
+                                        ID TEXT UNIQUE,
+                                        quoting INTEGER,
+                                        repayment INTEGER,
+                                        nominal INTEGER,
+                                        market INTEGER,
+                                        frequency INTEGER,
+                                        days INTEGER,
                                         qualification TEXT
                                         );'''
         cursor = sqlite_connection.cursor()

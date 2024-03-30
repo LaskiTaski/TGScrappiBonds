@@ -19,9 +19,12 @@ stse_qualification = types.InlineKeyboardButton('У вас есть статус
 
 
 information = types.InlineKeyboardButton('О нас ℹ️', callback_data='Information')
+get_papers = types.InlineKeyboardButton('Получить бумаги 🗃️', callback_data='Get_papers')
 payment = types.InlineKeyboardButton('Оплатить 💳', callback_data='Payment')
 
-go_back_menu = types.InlineKeyboardButton('Главное меню ↩️', callback_data='Menu')
+back = types.InlineKeyboardButton('Назад 🔙', callback_data='Back')
+menu = types.InlineKeyboardButton('Главное меню ↩️', callback_data='Menu')
+clear = types.InlineKeyboardButton('Сбросить настройки ♻️', callback_data='Clear')
 
 
 keyboard_menu = {
@@ -35,7 +38,10 @@ keyboard_menu = {
         stse_quoting, stse_frequency,
         stse_days, stse_qualification
         ],
+    "Назад": [back],
+    "Очистить": [clear],
     "Прочее": [information, payment],
-    "Вернуться в меню": [go_back_menu]
+    "Бумаги": [get_papers],
+    "Вернуться в меню": [menu]
 
 }
