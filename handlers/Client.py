@@ -101,6 +101,11 @@ async def cb_information(callback: types.CallbackQuery):
                                      reply_markup=kb)
 
 
+# @dp.message_handler(content_types=types.ContentType.TEXT, state='*')
+async def cmd_delete_message(message: types.Message):
+    await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
+
+
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(cmd_start, commands=['start'], state='*')
     dp.register_callback_query_handler(cb_menu, text='Menu', state='*')
@@ -111,3 +116,5 @@ def register_handlers_client(dp: Dispatcher):
     dp.register_callback_query_handler(cb_setting, text='Setting', state='*')
     dp.register_callback_query_handler(cb_params, text='Params', state='*')
     dp.register_callback_query_handler(cb_information, text='Information', state='*')
+
+    dp.register_message_handler(cmd_delete_message, content_types=types.ContentType.TEXT, state='*')
