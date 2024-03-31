@@ -20,7 +20,7 @@ async def cb_SettingQuoting(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["Котировка"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.QuotingState.set()
     await callback.message.edit_text(
@@ -33,7 +33,7 @@ async def cb_SettingQuoting(callback: types.CallbackQuery):
 async def cmd_SettingQuoting(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'quoting')
     IC_UserSetting(settings_user)
@@ -48,7 +48,7 @@ async def cb_SettingEnd(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["К погашению"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.EndState.set()
     await callback.message.edit_text(
@@ -61,7 +61,7 @@ async def cb_SettingEnd(callback: types.CallbackQuery):
 async def cmd_SettingEnd(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'repayment')
     IC_UserSetting(settings_user)
@@ -75,7 +75,7 @@ async def cb_SettingNominal(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["К номиналу"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.NominalState.set()
     await callback.message.edit_text(
@@ -88,7 +88,7 @@ async def cb_SettingNominal(callback: types.CallbackQuery):
 async def cmd_SettingNominal(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'nominal')
     IC_UserSetting(settings_user)
@@ -102,7 +102,7 @@ async def cb_SettingMarket(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["К рынку"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.MarketState.set()
     await callback.message.edit_text(
@@ -114,7 +114,7 @@ async def cb_SettingMarket(callback: types.CallbackQuery):
 async def cmd_SettingMarket(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'market')
     IC_UserSetting(settings_user)
@@ -128,7 +128,7 @@ async def cb_SettingFrequency(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["Купон"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.FrequencyState.set()
     await callback.message.edit_text(
@@ -141,7 +141,7 @@ async def cb_SettingFrequency(callback: types.CallbackQuery):
 async def cmd_SettingFrequency(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'frequency')
     IC_UserSetting(settings_user)
@@ -156,7 +156,7 @@ async def cb_SettingDays(callback: types.CallbackQuery):
     kb.add(*keyboard_settings["Погашение ДО"])
     kb.row(*keyboard_settings["Погашение ОТ"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.DaysState.set()
     await callback.message.edit_text(
@@ -169,7 +169,7 @@ async def cb_SettingDays(callback: types.CallbackQuery):
 async def cmd_SettingDays(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'days')
     IC_UserSetting(settings_user)
@@ -183,7 +183,7 @@ async def cb_SettingQualification(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["Квал"])
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     await FSMClientSettings.QualificationState.set()
     await callback.message.edit_text(
@@ -196,7 +196,7 @@ async def cb_SettingQualification(callback: types.CallbackQuery):
 async def cmd_SettingQualification(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     settings_user = (callback.from_user.id, callback.data, 'qualification')
     IC_UserSetting(settings_user)

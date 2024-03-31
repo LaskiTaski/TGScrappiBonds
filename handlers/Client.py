@@ -41,7 +41,7 @@ async def cb_End(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Доходность к погашению"])
     kb.add(*keyboard_menu["Общие параметры"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     if callback.data != 'Back':
         previous_button_data[callback.from_user.id] = callback.data
@@ -56,7 +56,7 @@ async def cb_Nominal(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Доходность купона к номиналу"])
     kb.add(*keyboard_menu["Общие параметры"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     if callback.data != 'Back':
         previous_button_data[callback.from_user.id] = callback.data
@@ -71,7 +71,7 @@ async def cb_Market(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Доходность купона к рынку"])
     kb.add(*keyboard_menu["Общие параметры"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     if callback.data != 'Back':
         previous_button_data[callback.from_user.id] = callback.data
@@ -88,7 +88,7 @@ async def cb_Setting(callback: types.CallbackQuery):
     kb.row(*keyboard_menu["Доходность купона к номиналу"])
     kb.row(*keyboard_menu["Доходность купона к рынку"])
     kb.add(*keyboard_menu["Общие параметры"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     if callback.data != 'Back':
         previous_button_data[callback.from_user.id] = callback.data
@@ -101,25 +101,26 @@ async def cb_Setting(callback: types.CallbackQuery):
 # @dp.callback_query_handlers(text='GetPapers', state='*')
 async def cb_GetPapers(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Мои параметры"])
+    kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
     IC_UserClearSetting(callback.from_user.id, )
     bonds = RE_GetPapers(callback.from_user.id, )
-
-    for bond in bonds[:5]:
-        await bot.send_message(chat_id=callback.message.chat.id, text=f'Название: {bond[1]}\n\n'
-                                                                      f'Котировка: {bond[2]}%\n\n'
-                                                                      f'К погашению: {bond[3]}%\n\n'
-                                                                      f'К рынку: {bond[4]}%\n\n'
-                                                                      f'К номиналу: {bond[5]}%\n\n'
-                                                                      f'Частота купона: {bond[6]} раз в год\n\n'
-                                                                      f'Дата погашения: {bond[7]}\n\n'
-                                                                      f'Дней до погашения: {bond[8]} дней\n\n'
-                                                                      f'ISIN: {bond[9]}\n\n'
-                                                                      f'Код бумаги: {bond[10]}\n\n'
-                                                                      f'Только для квалов? {bond[11]}\n\n'
-                                                                      f'Последнее обновление: \n{bond[12]}\n\n')
-        sleep(0.3)
+    if len(bonds) >= 5:
+        for bond in bonds[:5]:
+            await bot.send_message(chat_id=callback.message.chat.id, text=f'URL: {bond[0]}\n\n'
+                                                                          f'Название: {bond[1]}\n\n'
+                                                                          f'Котировка: {bond[2]}%\n\n'
+                                                                          f'К погашению: {bond[3]}%\n\n'
+                                                                          f'К рынку: {bond[4]}%\n\n'
+                                                                          f'К номиналу: {bond[5]}%\n\n'
+                                                                          f'Частота купона: {bond[6]} раз в год\n\n'
+                                                                          f'Дата погашения: {bond[7]}\n\n'
+                                                                          f'Дней до погашения: {bond[8]} дней\n\n'
+                                                                          f'ISIN: {bond[9]}\n\n'
+                                                                          f'Код бумаги: {bond[10]}\n\n'
+                                                                          f'Только для квалов? {bond[11]}\n\n'
+                                                                          f'Последнее обновление: \n{bond[12]}\n\n')
+            sleep(0.3)
 
     await callback.message.edit_text(
         '[Ознакомиться с параметрами для сортировки бумаг](https://telegra.ph/Kak-nastroit-parametry-03-19)',
@@ -130,7 +131,7 @@ async def cb_GetPapers(callback: types.CallbackQuery):
 async def cb_Params(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Назад"])
-    kb.row(*keyboard_menu["Вернуться в меню"], *keyboard_menu["Очистить"])
+    kb.row(*keyboard_menu["Очистить"], *keyboard_menu["Вернуться в меню"])
 
     information_params = RE_UserSettings(callback.from_user.id,)
 
