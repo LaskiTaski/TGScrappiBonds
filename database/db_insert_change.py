@@ -32,12 +32,10 @@ def IC_UserInformation(information_user):
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
 
     except sqlite3.Error as error:
-        print("Ошибка в IC_User_Information", error)
-    finally:
-        if sqlite_connection:
-            sqlite_connection.close()
+        print("Ошибка в IC_UserInformation", error)
 
 
 def IC_UserSetting(settings_user):
@@ -59,36 +57,57 @@ def IC_UserSetting(settings_user):
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         cursor = sqlite_connection.cursor()
         user_id = settings_user[0]
-        param_setings = settings_user[-1]
+        param_settings = settings_user[-1]
         cursor.execute("SELECT * FROM User_settings WHERE ID=?", (user_id,))
         result = cursor.fetchone()
 
         if result:
-            sqlite_insert_change_with_param = f"""UPDATE User_settings SET {param_setings}=? WHERE ID=?"""
+            sqlite_insert_change_with_param = f"""UPDATE User_settings SET {param_settings}=? WHERE ID=?"""
             data_tuple = (settings_user[1], user_id)
         else:
             sqlite_insert_change_with_param = f"""INSERT INTO User_settings
-                                  (ID, {param_setings})
+                                  (ID, {param_settings})
                                   VALUES (?, ?);"""
             data_tuple = tuple(settings_user[:-1])
 
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
 
     except sqlite3.Error as error:
-        print("Ошибка в IC_User_Setting", error)
-    finally:
-        if sqlite_connection:
+        print("Ошибка в IC_UserSetting", error)
+
+
+
+def IC_UserStartSetting(user_id):
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        cursor = sqlite_connection.cursor()
+        param_settings = ['—'] * 7
+        cursor.execute("SELECT * FROM User_settings WHERE ID=?", (user_id,))
+        result = cursor.fetchone()
+        if not result:
+            sqlite_insert_change_with_param = f"""INSERT INTO User_settings
+                                  (ID, quoting, repayment, nominal, market, frequency, days, qualification)
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?);"""
+            data_tuple = (user_id,) + tuple(param_settings)
+
+            cursor.execute(sqlite_insert_change_with_param, data_tuple)
+            sqlite_connection.commit()
+            cursor.close()
             sqlite_connection.close()
 
+    except sqlite3.Error as error:
+        print("Ошибка в IC_UserStartSetting", error)
 
-def IC_UserClearSetting(ID):
+
+def IC_UserResetSetting(ID):
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         cursor = sqlite_connection.cursor()
         user_id = ID
-        param_settings = ['—', '—', '—', '—', '—', '—', '—']
+        param_settings = ['—'] * 7
         cursor.execute("SELECT * FROM User_settings WHERE ID=?", (user_id,))
         result = cursor.fetchone()
         if result:
@@ -104,9 +123,43 @@ def IC_UserClearSetting(ID):
         cursor.execute(sqlite_insert_change_with_param, data_tuple)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
 
     except sqlite3.Error as error:
-        print("Ошибка в IC_User_ClearSetting", error)
-    finally:
-        if sqlite_connection:
-            sqlite_connection.close()
+        print("Ошибка в IC_UserClearSetting", error)
+
+
+def IC_UserClearSetting(ID):
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        cursor = sqlite_connection.cursor()
+        user_id = ID
+        cursor.execute("SELECT * FROM User_settings WHERE ID=?", (user_id,))
+        result = cursor.fetchone()
+
+        data = []
+        for item in result[1:-1]:
+            digits = ''.join(filter(str.isdigit, str(item)))
+            data.append(digits if digits else '-100')
+
+        result = tuple([*data, result[-1]])
+        print(result)
+
+        cursor.execute("SELECT * FROM User_clear_settings WHERE ID=?", (user_id,))
+        flag = cursor.fetchone()
+        if flag:
+            sqlite_insert_change_with_param = f"""UPDATE User_clear_settings SET quoting=?,repayment=?, 
+                                                nominal=?, market=?, frequency=?, days=?, qualification=? WHERE ID=?"""
+            data_tuple = (*result, user_id)
+        else:
+            sqlite_insert_change_with_param = f"""INSERT INTO User_clear_settings
+                                  (ID, quoting, repayment, nominal, market, frequency, days, qualification)
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?);"""
+            data_tuple = (user_id,) + tuple(result)
+        cursor.execute(sqlite_insert_change_with_param, data_tuple)
+        sqlite_connection.commit()
+        cursor.close()
+        sqlite_connection.close()
+
+    except sqlite3.Error as error:
+        print("Ошибка в IC_UserClearSetting", error)

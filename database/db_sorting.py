@@ -63,8 +63,7 @@ def get_User_settings(from_quoting=0, before_quoting=100,
         for row in records:
             print(row)
         cursor.close()
+        sqlite_connection.close()
+
     except sqlite3.Error as error:
         print("Ошибка при работе с get_the_nominal_info", error)
-    finally:
-        if sqlite_connection:
-            sqlite_connection.close()

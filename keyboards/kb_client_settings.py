@@ -1,6 +1,5 @@
 from aiogram import types
 
-# Сбросить настройки 🔁
 
 quoting_zero = types.InlineKeyboardButton('Больше 0', callback_data='> 0')
 quoting_twentyfive = types.InlineKeyboardButton('Больше 25', callback_data='> 25')

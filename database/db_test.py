@@ -5,8 +5,7 @@ def connect_db():
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         print('Подключение установленно...')
+        sqlite_connection.close()
+
     except sqlite3.Error as error:
         print("Ошибка в CREATE_DB", error)
-    finally:
-        if (sqlite_connection):
-            sqlite_connection.close()

@@ -23,11 +23,11 @@ def CT_UserInformation():
         cursor.execute(sqlite_create_table_query)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
+
     except sqlite3.Error as error:
-        print("Ошибка в create_table_User_Information", error)
-    finally:
-        if (sqlite_connection):
-            sqlite_connection.close()
+        print("Ошибка в CT_UserInformation", error)
+
 
 def CT_UserSettings():
     """
@@ -57,11 +57,10 @@ def CT_UserSettings():
         cursor.execute(sqlite_create_table_query)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
+
     except sqlite3.Error as error:
-        print("Ошибка в create_client_settings", error)
-    finally:
-        if (sqlite_connection):
-            sqlite_connection.close()
+        print("Ошибка в CT_UserSettings", error)
 
 
 def CT_UserClearSettings():
@@ -92,8 +91,7 @@ def CT_UserClearSettings():
         cursor.execute(sqlite_create_table_query)
         sqlite_connection.commit()
         cursor.close()
+        sqlite_connection.close()
+
     except sqlite3.Error as error:
-        print("Ошибка в create_client_settings", error)
-    finally:
-        if (sqlite_connection):
-            sqlite_connection.close()
+        print("Ошибка в CT_UserClearSettings", error)
