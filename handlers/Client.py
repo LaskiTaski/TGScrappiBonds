@@ -1,3 +1,5 @@
+from time import sleep
+
 from bot_telegram import bot
 from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_menu
@@ -103,8 +105,10 @@ async def cb_GetPapers(callback: types.CallbackQuery):
 
     IC_UserClearSetting(callback.from_user.id, )
     bonds = RE_GetPapers(callback.from_user.id, )
-    for bond in bonds:
-        print(bond)
+
+    for bond in bonds[:5]:
+        await bot.send_message(chat_id=callback.message.chat.id, text=f'{bond}')
+        sleep(0.3)
 
     await callback.message.edit_text(
         '[Ознакомиться с параметрами для сортировки бумаг](https://telegra.ph/Kak-nastroit-parametry-03-19)',
