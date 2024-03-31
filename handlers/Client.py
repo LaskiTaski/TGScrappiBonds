@@ -107,7 +107,18 @@ async def cb_GetPapers(callback: types.CallbackQuery):
     bonds = RE_GetPapers(callback.from_user.id, )
 
     for bond in bonds[:5]:
-        await bot.send_message(chat_id=callback.message.chat.id, text=f'{bond}')
+        await bot.send_message(chat_id=callback.message.chat.id, text=f'Название: {bond[1]}\n\n'
+                                                                      f'Котировка: {bond[2]}%\n\n'
+                                                                      f'К погашению: {bond[3]}%\n\n'
+                                                                      f'К рынку: {bond[4]}%\n\n'
+                                                                      f'К номиналу: {bond[5]}%\n\n'
+                                                                      f'Частота купона: {bond[6]} раз в год\n\n'
+                                                                      f'Дата погашения: {bond[7]}\n\n'
+                                                                      f'Дней до погашения: {bond[8]} дней\n\n'
+                                                                      f'ISIN: {bond[9]}\n\n'
+                                                                      f'Код бумаги: {bond[10]}\n\n'
+                                                                      f'Только для квалов? {bond[11]}\n\n'
+                                                                      f'Последнее обновление: \n{bond[12]}\n\n')
         sleep(0.3)
 
     await callback.message.edit_text(

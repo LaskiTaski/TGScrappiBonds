@@ -143,7 +143,6 @@ def IC_UserClearSetting(ID):
             data.append(digits if digits else '-100')
 
         result = tuple([*data, result[-1]])
-        print(result)
 
         cursor.execute("SELECT * FROM User_clear_settings WHERE ID=?", (user_id,))
         flag = cursor.fetchone()
