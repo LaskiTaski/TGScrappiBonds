@@ -40,19 +40,34 @@ def RE_GetPapers(ID):
                                                                               "frequency", "days",
                                                                               "qualification"],
                                                                              params)}
-
-        sql_select_query = f"""SELECT * FROM All_Bonds WHERE Quoting >= {int(params["quoting"])} AND
-                            Repayment >= {int(params["repayment"])} AND Nominal >= {int(params["nominal"])} AND
-                            Market >= {int(params["market"])} AND Frequency >= {int(params["frequency"])} AND
-                            Days >= {int(params["days"])} AND
-                            Qualification LIKE '{'Нет' if params["qualification"] == '—' else params["qualification"]}'
-"""
+        sql_select_query = f"""SELECT * FROM All_Bonds WHERE 
+        Quoting >= {int(params["quoting"])} AND Repayment >= {int(params["repayment"])} AND
+        Nominal >= {int(params["nominal"])} AND Market >= {int(params["market"])} AND 
+        Frequency >= {int(params["frequency"])} AND Days <= {int(params["days"])} AND
+        Qualification LIKE '{'Нет' if params["qualification"] == '—' else params["qualification"]}' """
         cursor.execute(sql_select_query)
         bonds = cursor.fetchall()
-
         cursor.close()
         sqlite_connection.close()
         return bonds
+
+    except sqlite3.Error as error:
+        print("Ошибка при работе с RE_GetPapers", error)
+
+
+def RE_UserPappers(ID, pagen):
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        cursor = sqlite_connection.cursor()
+        user_id = ID
+
+        sql_select_query = f"""SELECT * FROM User{user_id}_bonds WHERE ROWID = {pagen+1}"""
+        cursor.execute(sql_select_query)
+        bond = cursor.fetchone()
+        cursor.close()
+        sqlite_connection.close()
+        print(bond)
+        return bond
 
     except sqlite3.Error as error:
         print("Ошибка при работе с RE_GetPapers", error)

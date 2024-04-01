@@ -15,7 +15,8 @@ reset = types.InlineKeyboardButton('Сбросить настройки ♻️',
 
 information = types.InlineKeyboardButton('О нас ℹ️', callback_data='Information')
 payment = types.InlineKeyboardButton('Оплатить 💳', callback_data='Payment')
-get_papers = types.InlineKeyboardButton('Получить бумаги 🗃️', callback_data='GetPapers')
+
+collect_papers = types.InlineKeyboardButton('Получить бумаги 🗃️', callback_data='CollectPapers')
 
 menu = types.InlineKeyboardButton('Главное меню ↩️', callback_data='Menu')
 back = types.InlineKeyboardButton('Назад 🔙', callback_data='MenuSetting')
@@ -35,7 +36,7 @@ keyboard_menu = {
     "Назад": [back],
     "Очистить": [reset],
     "Прочее": [information, payment],
-    "Бумаги": [get_papers],
+    "Бумаги": [collect_papers],
     "Вернуться в меню": [menu]
 
 }

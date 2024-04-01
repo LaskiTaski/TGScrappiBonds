@@ -141,9 +141,7 @@ def IC_UserClearSetting(ID):
         for item in result[1:-1]:
             digits = ''.join(filter(str.isdigit, str(item)))
             data.append(digits if digits else '-100')
-
         result = tuple([*data, result[-1]])
-
         cursor.execute("SELECT * FROM User_clear_settings WHERE ID=?", (user_id,))
         flag = cursor.fetchone()
         if flag:
@@ -162,3 +160,26 @@ def IC_UserClearSetting(ID):
 
     except sqlite3.Error as error:
         print("Ошибка в IC_UserClearSetting", error)
+
+
+def IC_UserBonds(bonds):
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        cursor = sqlite_connection.cursor()
+        user_id = bonds[0]
+        sqlite_insert_change_with_param = f"""DELETE FROM User{user_id}_bonds"""
+        cursor.execute(sqlite_insert_change_with_param)
+        for bond in bonds[1]:
+            sqlite_insert_change_with_param = f"""INSERT INTO User{user_id}_bonds
+                                      (URL, NAME, Quoting, Repayment, Market, Nominal, 
+                                      Frequency, Date, Days, ISIN, Code, Qualification, TIME_DATE)
+                                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
+            cursor.execute(sqlite_insert_change_with_param, bond)
+            sqlite_connection.commit()
+
+        cursor.close()
+        sqlite_connection.close()
+
+
+    except sqlite3.Error as error:
+        print(f"Ошибка в IC_UserBonds", error)

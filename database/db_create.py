@@ -95,3 +95,42 @@ def CT_UserClearSettings():
 
     except sqlite3.Error as error:
         print("Ошибка в CT_UserClearSettings", error)
+
+
+def CT_UserBonds(user_id):
+    """
+    :param ID: ID пользователя который зарегистрировался.
+    :param quoting: Параметры котировок облигаций.
+    :param repayment: Параметры Доходности к погашению.
+    :param nominal: Параметры Доходности купона к номиналу.
+    :param market: Параметры Доходности купона к рыночной цене.
+    :param frequency: Параметры Частоты купона.
+    :param days: Параметры Дней до погашения.
+    :param qualification: Статус квал. True / False
+    :return:
+    """
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        sqlite_create_table_query = f'''CREATE TABLE IF NOT EXISTS User{user_id}_bonds (
+                                    URL TEXT UNIQUE,
+                                    NAME TEXT,
+                                    Quoting REAL,
+                                    Repayment REAL,
+                                    Market REAL,
+                                    Nominal REAL,
+                                    Frequency INTEGER,
+                                    Date DATETIME,
+                                    Days INTEGER,
+                                    ISIN TEXT,
+                                    Code TEXT,
+                                    Qualification TEXT,
+                                    TIME_DATE TEXT
+                                    );'''
+        cursor = sqlite_connection.cursor()
+        cursor.execute(sqlite_create_table_query)
+        sqlite_connection.commit()
+        cursor.close()
+        sqlite_connection.close()
+
+    except sqlite3.Error as error:
+        print("Ошибка в CT_UserSettings", error)
