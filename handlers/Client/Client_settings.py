@@ -84,7 +84,7 @@ async def cb_SettingFrequency(callback: types.CallbackQuery):
 async def cb_SettingDays(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["Погашение ДО"])
-    kb.row(*keyboard_settings["Погашение ОТ"])
+    # kb.row(*keyboard_settings["Погашение ОТ"])
     kb.row(*keyboard_menu["Назад"])
     kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 

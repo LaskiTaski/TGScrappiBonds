@@ -43,7 +43,7 @@ def RE_GetPapers(ID):
         sql_select_query = f"""SELECT * FROM All_Bonds WHERE 
         Quoting >= {int(params["quoting"])} AND Repayment >= {int(params["repayment"])} AND
         Nominal >= {int(params["nominal"])} AND Market >= {int(params["market"])} AND 
-        Frequency >= {int(params["frequency"])} AND Days <= {int(params["days"])} AND
+        Frequency >= {int(params["frequency"])} AND Days <= {30000 if int(params["days"] == -100) else int(params["days"])} AND
         Qualification LIKE '{'Нет' if params["qualification"] == '—' else params["qualification"]}' """
         cursor.execute(sql_select_query)
         bonds = cursor.fetchall()

@@ -29,7 +29,7 @@ days_month = types.InlineKeyboardButton('До месяца', callback_data='< 31
 days_quarter = types.InlineKeyboardButton('До квартала', callback_data='< 90')
 days_term = types.InlineKeyboardButton('До полугода', callback_data='< 182')
 days_year = types.InlineKeyboardButton('До года', callback_data='< 365')
-days_more_years = types.InlineKeyboardButton('Год и более', callback_data='> 365')
+# days_more_years = types.InlineKeyboardButton('Год и более', callback_data='> 365')
 
 yes = types.InlineKeyboardButton('Да ✅', callback_data='Да')
 no = types.InlineKeyboardButton('Нет ❌', callback_data='Нет')
@@ -45,7 +45,7 @@ keyboard_settings = {
     "К рынку": [market_five, market_ten, market_fifteen, market_twenty],
     "Купон": [frequency_two, frequency_four, frequency_twelve],
     "Погашение ДО": [days_week, days_month, days_quarter, days_term, days_year],
-    "Погашение ОТ": [days_more_years],
+    # "Погашение ОТ": [days_more_years],
     "Квал": [yes, no],
     "Страницы": [back, next]
 }
