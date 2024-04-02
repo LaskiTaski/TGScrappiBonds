@@ -1,9 +1,8 @@
 from bot_telegram import bot
 from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_menu
-from keyboards.kb_client_settings import keyboard_settings
 from database.db_insert_change import IC_UserInformation, IC_UserStartSetting, \
-    IC_UserClearSetting, IC_UserResetSetting, IC_UserBonds
+                                      IC_UserClearSetting, IC_UserBonds
 from database.db_receive import RE_UserSettings, RE_GetPapers, RE_UserPappers
 from database.db_create import CT_UserBonds
 
@@ -55,10 +54,13 @@ async def cb_CollectPapers(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
-    previous_paggen_data[callback.from_user.id] = 0
+    previous_paggen_data[callback.from_user.id] = 1
     IC_UserClearSetting(callback.from_user.id, )
     bonds = RE_GetPapers(callback.from_user.id, )
+
     if bonds is not None and len(bonds) != 0:
+        await bot.answer_callback_query(callback_query_id=callback.id,
+                                        text='Пожалуйста подождите, мы уже ищем подходящие бумаги', show_alert=True)
         IC_UserBonds(tuple([callback.from_user.id, bonds]))
         await cb_GetPapers(callback)
     else:
@@ -70,10 +72,12 @@ async def cb_CollectPapers(callback: types.CallbackQuery):
 # @dp.callback_query_handlers(text='GetPapers', state='*')
 async def cb_GetPapers(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
-    next = types.InlineKeyboardButton('След. ▶️', callback_data='Next')
+
+    forth = types.InlineKeyboardButton('След. ▶️', callback_data='Next')
     pagen = types.InlineKeyboardButton(f'{previous_paggen_data[callback.from_user.id]}', callback_data='None')
     back = types.InlineKeyboardButton('◀️ Пред.', callback_data='Back')
-    kb.row(back, pagen, next)
+    
+    kb.row(back, pagen, forth)
     kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
     bond = RE_UserPappers(callback.from_user.id, previous_paggen_data[callback.from_user.id])
     if bond is not None:
@@ -100,7 +104,7 @@ async def cb_NextPapers(callback: types.CallbackQuery):
 
 # @dp.callback_query_handlers(text='Back', state='*')
 async def cb_BackPapers(callback: types.CallbackQuery):
-    if previous_paggen_data[callback.from_user.id] != 0:
+    if previous_paggen_data[callback.from_user.id] != 1:
         previous_paggen_data[callback.from_user.id] -= 1
         await cb_GetPapers(callback)
     else:
@@ -150,7 +154,7 @@ async def cb_Information(callback: types.CallbackQuery):
 
 # @dp.callback_query_handlers(text='Reset', state='*')
 async def cb_Reset(callback: types.CallbackQuery):
-    IC_UserResetSetting(callback.from_user.id, )
+    IC_UserStartSetting(callback.from_user.id, )
     await bot.answer_callback_query(callback_query_id=callback.id,
                                     text='Ваши настройки сброшены!',
                                     show_alert=True)

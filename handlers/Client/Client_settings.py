@@ -1,7 +1,6 @@
 from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_menu
 from keyboards.kb_client_settings import keyboard_settings
-from database.db_insert_change import IC_UserSetting
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
@@ -84,7 +83,7 @@ async def cb_SettingFrequency(callback: types.CallbackQuery):
 async def cb_SettingDays(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(*keyboard_settings["Погашение ДО"])
-    # kb.row(*keyboard_settings["Погашение ОТ"])
+    kb.row(*keyboard_settings["Погашение ОТ"])
     kb.row(*keyboard_menu["Назад"])
     kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 

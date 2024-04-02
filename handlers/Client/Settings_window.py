@@ -4,7 +4,7 @@ from database.db_insert_change import IC_UserSetting
 from handlers.Client.Client_settings import FSMClientSettings
 
 
-# @dp.message_handler(lambda x: x.data in ['> 25', '> 50', '> 75', '> 90'],
+# @dp.message_handler(lambda x: x.data in ['> 25', '> 50', '> 75', '> 90', '—'],
 #                     state=(FSMClientSettings.QuotingState,))
 async def cmd_SettingQuoting(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -19,7 +19,7 @@ async def cmd_SettingQuoting(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
 #                     state=(FSMClientSettings.EndState,))
 async def cmd_SettingEnd(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -33,7 +33,7 @@ async def cmd_SettingEnd(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
 #                     state=(FSMClientSettings.NominalState,))
 async def cmd_SettingNominal(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -47,7 +47,7 @@ async def cmd_SettingNominal(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+# @dp.message_handler(lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
 #                     state=(FSMClientSettings.MarketState,))
 async def cmd_SettingMarket(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -61,7 +61,7 @@ async def cmd_SettingMarket(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.callback_query_handlers(lambda x: x in ['2', '4', '12'],
+# @dp.callback_query_handlers(lambda x: x in ['2', '4', '12', '—'],
 #                             state=(FSMClientSettings.FrequencyState,))
 async def cmd_SettingFrequency(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -75,7 +75,7 @@ async def cmd_SettingFrequency(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.callback_query_handlers(lambda x: x.data in ['< 7', '< 31', '< 90', '< 182', '< 365', '> 365'],
+# @dp.callback_query_handlers(lambda x: x.data in ['< 7', '< 31', '< 90', '< 182', '< 366', '> 365', '—'],
 #                             state=(FSMClientSettings.DaysState,))
 async def cmd_SettingDays(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -89,7 +89,7 @@ async def cmd_SettingDays(callback: types.CallbackQuery):
         reply_markup=kb)
 
 
-# @dp.message_handler(lambda x: x.data in ['Да', 'Нет'],
+# @dp.message_handler(lambda x: x.data in ['Да', 'Нет', '—'],
 #                     state=(FSMClientSettings.QualificationState,))
 async def cmd_SettingQualification(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=2)
@@ -105,28 +105,28 @@ async def cmd_SettingQualification(callback: types.CallbackQuery):
 
 def register_handlers_settings_window(dp: Dispatcher):
     dp.register_callback_query_handler(cmd_SettingQuoting,
-                                       lambda x: x.data in ['> 25', '> 50', '> 75', '> 90'],
+                                       lambda x: x.data in ['> 25', '> 50', '> 75', '> 90', '—'],
                                        state=(FSMClientSettings.QuotingState,))
 
     dp.register_callback_query_handler(cmd_SettingEnd,
-                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
                                        state=(FSMClientSettings.EndState,))
 
     dp.register_callback_query_handler(cmd_SettingNominal,
-                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
                                        state=(FSMClientSettings.NominalState,))
 
     dp.register_callback_query_handler(cmd_SettingMarket,
-                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20'],
+                                       lambda x: x.data in ['> 5', '> 10', '> 15', '> 20', '—'],
                                        state=(FSMClientSettings.MarketState,))
 
     dp.register_callback_query_handler(cmd_SettingFrequency,
-                                       lambda x: x.data in ['2', '4', '12'],
+                                       lambda x: x.data in ['2', '4', '12', '—'],
                                        state=(FSMClientSettings.FrequencyState,))
 
     dp.register_callback_query_handler(cmd_SettingDays,
-                                       lambda x: x.data in ['< 7', '< 31', '< 90', '< 182', '< 365', '> 365'],
+                                       lambda x: x.data in ['< 7', '< 31', '< 90', '< 182', '< 366', '> 365', '—'],
                                        state=(FSMClientSettings.DaysState,))
 
-    dp.register_callback_query_handler(cmd_SettingQualification, lambda x: x.data in ['Да', 'Нет'],
+    dp.register_callback_query_handler(cmd_SettingQualification, lambda x: x.data in ['Да', 'Нет', '—'],
                                        state=(FSMClientSettings.QualificationState,))

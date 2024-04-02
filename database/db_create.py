@@ -3,13 +3,12 @@ from bot_telegram import ABSOLUTE_PATH
 
 def CT_UserInformation():
     """
-    Ф-ия создающая таблицу внутри базы данных, подключение к которой происходит через абсолютный путь к файлу.
+    Таблица хранящая в себе данные о пользователе и уровне доступа.
     Создаёт колонки хранящие в себе:
-    ID - id пользователя написавшего команду /start
-    NAME - Имя указанное в профиле пользователя
-    USER_NAME - Ссылка на профиль пользователя
-    ACCESS - Имеет ли данный человек разрешение на пользование ботом -> True/False
-    :return:
+    ID - id пользователя написавшего команду /start.
+    NAME - Имя указанное в профиле пользователя.
+    USER_NAME - Ссылка на профиль пользователя.
+    ACCESS - Имеет ли данный человек разрешение на пользование ботом -> True/False.
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
@@ -31,6 +30,8 @@ def CT_UserInformation():
 
 def CT_UserSettings():
     """
+    Таблица хранящая в себе настройки пользователя для отображения их в меню.
+    Создаёт колонки хранящие в себе:
     :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
     :param repayment: Параметры Доходности к погашению.
@@ -38,8 +39,7 @@ def CT_UserSettings():
     :param market: Параметры Доходности купона к рыночной цене.
     :param frequency: Параметры Частоты купона.
     :param days: Параметры Дней до погашения.
-    :param qualification: Статус квал. True / False
-    :return:
+    :param qualification: Статус квал. True / False.
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
@@ -65,6 +65,8 @@ def CT_UserSettings():
 
 def CT_UserClearSettings():
     """
+    Таблица хранящая в себе очищенные от лишних символов параметры пользователя.
+    Создаёт колонки хранящие в себе:
     :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
     :param repayment: Параметры Доходности к погашению.
@@ -72,8 +74,7 @@ def CT_UserClearSettings():
     :param market: Параметры Доходности купона к рыночной цене.
     :param frequency: Параметры Частоты купона.
     :param days: Параметры Дней до погашения.
-    :param qualification: Статус квал. True / False
-    :return:
+    :param qualification: Статус квал. True / False.
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
@@ -99,6 +100,8 @@ def CT_UserClearSettings():
 
 def CT_UserBonds(user_id):
     """
+    Таблица хранящая в себе бумаги подготовленные для конкретного пользователя.
+    Создаёт колонки хранящие в себе:
     :param ID: ID пользователя который зарегистрировался.
     :param quoting: Параметры котировок облигаций.
     :param repayment: Параметры Доходности к погашению.
@@ -106,8 +109,7 @@ def CT_UserBonds(user_id):
     :param market: Параметры Доходности купона к рыночной цене.
     :param frequency: Параметры Частоты купона.
     :param days: Параметры Дней до погашения.
-    :param qualification: Статус квал. True / False
-    :return:
+    :param qualification: Статус квал. True / False.
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
