@@ -81,9 +81,8 @@ async def cb_SettingFrequency(callback: types.CallbackQuery):
 
 # @dp.callback_query_handlers(text='StDays', state='*')
 async def cb_SettingDays(callback: types.CallbackQuery):
-    kb = types.InlineKeyboardMarkup(row_width=2)
-    kb.add(*keyboard_settings["Погашение ДО"])
-    kb.row(*keyboard_settings["Погашение ОТ"])
+    kb = types.InlineKeyboardMarkup(row_width=3)
+    kb.add(*keyboard_settings["Погашение"])
     kb.row(*keyboard_menu["Назад"])
     kb.row(*keyboard_menu["Мои параметры"], *keyboard_menu["Вернуться в меню"])
 
