@@ -9,6 +9,7 @@ storage = MemoryStorage()
 
 ABSOLUTE_PATH = os.getenv('ABSOLUTE_PATH')
 TOKEN = os.getenv('TOKEN_API')
+PAYMENTS_PROVIDER_TOKEN = os.getenv('PAYMENTS_PROVIDER_TOKEN')
 
 bot = Bot(token=TOKEN, parse_mode='Markdown')
 dp = Dispatcher(bot, storage=storage)

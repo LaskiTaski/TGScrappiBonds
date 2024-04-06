@@ -1,4 +1,3 @@
-from handlers.Client import Client
-from handlers.Client import Client_settings
-from handlers.Client import Settings_window
-from handlers import Payment
+from handlers import Client
+from handlers import Payments
+from handlers import other

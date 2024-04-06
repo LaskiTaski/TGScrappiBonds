@@ -1,6 +1,9 @@
 from aiogram import Dispatcher, types
+
 from keyboards.kb_client import keyboard_menu
-from database.db_insert_change import IC_UserSetting
+
+from database.db_UserSettings import SET_UserSettingParam
+
 from handlers.Client.Client_settings import FSMClientSettings
 
 
@@ -16,7 +19,7 @@ async def cmd_SettingQuoting(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'quoting'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39m4xT)',
@@ -35,7 +38,7 @@ async def cmd_SettingEnd(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'repayment'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39m5tU)',
@@ -54,7 +57,7 @@ async def cmd_SettingNominal(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'nominal'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39m6XQ)',
@@ -73,7 +76,7 @@ async def cmd_SettingMarket(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'market'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39mRvK)',
@@ -92,7 +95,7 @@ async def cmd_SettingFrequency(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'frequency'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39kZiS)',
@@ -111,7 +114,7 @@ async def cmd_SettingDays(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'days'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39m3HL)',
@@ -130,7 +133,7 @@ async def cmd_SettingQualification(callback: types.CallbackQuery):
         "Settings": callback.data,
         "Column": 'qualification'
     }
-    IC_UserSetting(settings_user)
+    SET_UserSettingParam(settings_user)
 
     await callback.message.edit_text(
         'Вернитесь в меню или проверьте "Мои параметры 📋".[ ](https://clck.ru/39kZgx)',

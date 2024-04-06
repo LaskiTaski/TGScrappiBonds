@@ -2,27 +2,47 @@ import sqlite3
 from bot_telegram import ABSOLUTE_PATH
 
 
-def RE_UserSettings(ID):
+def CREATE_UserBonds(user_id):
     """
-    :param ID: ID пользователя.
-    :return: Данные о параметрах настроенных пользователем.
+    Таблица хранящая в себе бумаги подготовленные для конкретного пользователя.
+    Создаёт колонки хранящие в себе:
+    :param ID: ID пользователя который зарегистрировался.
+    :param quoting: Параметры котировок облигаций.
+    :param repayment: Параметры Доходности к погашению.
+    :param nominal: Параметры Доходности купона к номиналу.
+    :param market: Параметры Доходности купона к рыночной цене.
+    :param frequency: Параметры Частоты купона.
+    :param days: Параметры Дней до погашения.
+    :param qualification: Статус квал. True / False.
     """
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        sqlite_create_table_query = f'''CREATE TABLE IF NOT EXISTS User{user_id}_bonds (
+                                    URL TEXT UNIQUE,
+                                    NAME TEXT,
+                                    Quoting REAL,
+                                    Repayment REAL,
+                                    Market REAL,
+                                    Nominal REAL,
+                                    Frequency INTEGER,
+                                    Date DATETIME,
+                                    Days INTEGER,
+                                    ISIN TEXT,
+                                    Code TEXT,
+                                    Qualification TEXT,
+                                    TIME_DATE TEXT
+                                    );'''
         cursor = sqlite_connection.cursor()
-        sql_select_query = f"""SELECT * FROM User_settings WHERE ID = ?"""
-        cursor.execute(sql_select_query, (ID,))
-        params = cursor.fetchone()
-        if params:
-            names = ["ID", "quoting", "repayment", "nominal", "market", "frequency", "days", "qualification"]
-            information_params = {name_table: value_table for name_table, value_table in zip(names, params)}
-            cursor.close()
-            sqlite_connection.close()
-            return information_params
-    except sqlite3.Error as error:
-        print("Ошибка при работе с RE_User_settings", error)
+        cursor.execute(sqlite_create_table_query)
+        sqlite_connection.commit()
+        cursor.close()
+        sqlite_connection.close()
 
-def RE_SuitablePapers(ID):
+    except sqlite3.Error as error:
+        print("Ошибка в CT_UserBonds", error)
+
+
+def GET_SuitablePapers(ID):
     """
     Собирает динамический запрос опираясь на предпочтения пользователя и возвращает все подошедшие бумаги.
     :param ID: ID - пользователя
@@ -71,7 +91,29 @@ def RE_SuitablePapers(ID):
         print("Ошибка при работе с RE_SuitablePapers", error)
 
 
-def RE_GetPaper(ID: str, pagen: int) -> [list]:
+def SET_UserBonds(bonds):
+    try:
+        sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
+        cursor = sqlite_connection.cursor()
+        user_id = bonds[0]
+        sqlite_insert_change_with_param = f"""DELETE FROM User{user_id}_bonds"""
+        cursor.execute(sqlite_insert_change_with_param)
+        for bond in bonds[1]:
+            sqlite_insert_change_with_param = f"""INSERT INTO User{user_id}_bonds
+                                      (URL, NAME, Quoting, Repayment, Market, Nominal, 
+                                      Frequency, Date, Days, ISIN, Code, Qualification, TIME_DATE)
+                                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
+            cursor.execute(sqlite_insert_change_with_param, bond)
+            sqlite_connection.commit()
+
+        cursor.close()
+        sqlite_connection.close()
+
+    except sqlite3.Error as error:
+        print(f"Ошибка в IC_UserBonds", error)
+
+
+def GET_GetPaper(ID: str, pagen: int) -> [list]:
     """
     Выдаёт каждую бумагу по отдельности в зависимости от нумерации в таблице и кэш значения.
     :param ID: ID пользователя для подключения к нужной таблице
@@ -99,7 +141,7 @@ def RE_GetPaper(ID: str, pagen: int) -> [list]:
         print("Ошибка при работе с RE_GetPapers", error)
 
 
-def RE_GetPages(ID: str) -> [int]:
+def GET_GetPages(ID: str) -> [int]:
     try:
         sqlite_connection = sqlite3.connect(ABSOLUTE_PATH)
         cursor = sqlite_connection.cursor()
@@ -114,4 +156,3 @@ def RE_GetPages(ID: str) -> [int]:
 
     except sqlite3.Error as error:
         print("Ошибка при работе с RE_GetPages", error)
-
