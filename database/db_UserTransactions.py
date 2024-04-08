@@ -64,13 +64,13 @@ def UPDATE_UserDaysLeft(information_user):
         cursor = sqlite_connection.cursor()
 
         user_id = information_user["ID"]
-        cursor.execute("SELECT DatePayment, EndSubscription FROM User_transactions WHERE ID=?", (user_id,))
+        cursor.execute("SELECT EndSubscription FROM User_transactions WHERE ID=?", (user_id,))
         result = cursor.fetchone()
 
         if result is not None:
-            DatePayment = datetime.strptime(result[0], "%d.%m.%Y")
-            EndSubscription = datetime.strptime(result[1], "%d.%m.%Y")
-            DaysLeft = int((EndSubscription - DatePayment).days)
+            Today = datetime.now()
+            EndSubscription = datetime.strptime(result[0], "%d.%m.%Y")
+            DaysLeft = int((EndSubscription - Today).days)
 
             sqlite_insert_change_with_param = f"""UPDATE User_transactions SET DaysLeft=? WHERE ID=?"""
             data_tuple = (DaysLeft,) + (user_id,)

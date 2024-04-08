@@ -4,9 +4,10 @@ from aiogram.types.message import ContentTypes
 
 from datetime import datetime, timedelta
 
-from bot_telegram import bot, PAYMENTS_PROVIDER_TOKEN
+from bot_telegram import bot, YOOKASSA_PROVIDER_TOKEN, SBERBANK_PROVIDER_TOKEN
 
 from keyboards.kb_client import keyboard_menu
+from keyboards.kb_payments import keyboard_payments
 
 from database.db_UserBonds import CREATE_UserBonds
 from database.db_UserTransactions import SET_UserInformTransactions
@@ -16,6 +17,16 @@ from database.db_UserInformation import GET_UserDateRegistration
 # @dp.callback_query_handlers(text='Payment', state='*')
 async def cb_Payment(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(row_width=1)
+    kb.row(*keyboard_payments["Способы оплаты"])
+    kb.row(*keyboard_menu["Вернуться в меню"])
+
+    await callback.message.edit_text('Выберите способ оплаты[ ](https://clck.ru/39wkCi)',
+                                     reply_markup=kb)
+
+
+# @dp.callback_query_handlers(text='Yookassa', state='*')
+async def cb_Yookassa(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=1)
     kb.row(*keyboard_menu["Вернуться в меню"])
 
     await bot.send_invoice(
@@ -23,7 +34,28 @@ async def cb_Payment(callback: types.CallbackQuery):
         title='Advisor',
         description='Этот бот поможет вам быстрее находить бумаги, отвечающие вашим требованиям.',
         payload='Payload',
-        provider_token=PAYMENTS_PROVIDER_TOKEN,
+        provider_token=YOOKASSA_PROVIDER_TOKEN,
+        currency='rub',
+        prices=[LabeledPrice(label='Подписка на 1 месяц', amount=250_00)],
+        photo_url='https://clck.ru/39tbmi',
+        photo_size=100,
+        photo_width=800,
+        photo_height=450,
+        reply_markup=None
+    )
+
+
+# @dp.callback_query_handlers(text='Sberbank', state='*')
+async def cb_Sberbank(callback: types.CallbackQuery):
+    kb = types.InlineKeyboardMarkup(row_width=1)
+    kb.row(*keyboard_menu["Вернуться в меню"])
+
+    await bot.send_invoice(
+        chat_id=callback.from_user.id,
+        title='Advisor',
+        description='Этот бот поможет вам быстрее находить бумаги, отвечающие вашим требованиям.',
+        payload='Payload',
+        provider_token=SBERBANK_PROVIDER_TOKEN,
         currency='rub',
         prices=[LabeledPrice(label='Подписка на 1 месяц', amount=250_00)],
         photo_url='https://clck.ru/39tbmi',
@@ -66,5 +98,8 @@ async def SuccessfulPayment(message: Message):
 
 def register_handlers_payment(dp: Dispatcher):
     dp.register_callback_query_handler(cb_Payment, text='Payment', state='*')
+    dp.register_callback_query_handler(cb_Yookassa, text='Yookassa', state='*')
+    dp.register_callback_query_handler(cb_Sberbank, text='Sberbank', state='*')
+
     dp.register_pre_checkout_query_handler(PreCheckoutQuery)
     dp.register_message_handler(SuccessfulPayment, content_types=ContentTypes.SUCCESSFUL_PAYMENT)
