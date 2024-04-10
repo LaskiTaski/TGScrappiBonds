@@ -3,18 +3,7 @@ from aiogram import Dispatcher, types
 from keyboards.kb_client import keyboard_menu
 from keyboards.kb_client_settings import keyboard_settings
 
-from aiogram.dispatcher.filters.state import State, StatesGroup
-
-
-class FSMClientSettings(StatesGroup):
-    QuotingState = State()
-    EndState = State()
-    NominalState = State()
-    MarketState = State()
-    FrequencyState = State()
-    DaysState = State()
-    QualificationState = State()
-
+from utils.state import FSMClientSettings
 
 # @dp.callback_query_handlers(text='StQuoting', state='*')
 async def cb_SettingQuoting(callback: types.CallbackQuery):

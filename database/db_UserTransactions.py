@@ -42,7 +42,7 @@ def SET_UserInformTransactions(information_user):
         if result is not None:
             sqlite_insert_change_with_param = f"""UPDATE User_transactions SET DateRegistration=?, 
             DatePayment=?, EndSubscription=?, DaysLeft=? WHERE ID=?"""
-            data_tuple = (user_id,)
+            data_tuple = tuple(information_user.values())[1::] + (user_id,)
         else:
             sqlite_insert_change_with_param = """INSERT INTO User_transactions (ID, DateRegistration, DatePayment,
                                                                                 EndSubscription, DaysLeft)

@@ -4,7 +4,7 @@ from keyboards.kb_client import keyboard_menu
 
 from database.db_UserSettings import SET_UserSettingParam
 
-from handlers.Client.Client_settings import FSMClientSettings
+from utils.state import FSMClientSettings
 
 
 # @dp.message_handler(lambda x: x.data in ['25', '50', '75', '90', '—'],
