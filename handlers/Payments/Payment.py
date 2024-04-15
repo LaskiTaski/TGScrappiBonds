@@ -22,6 +22,7 @@ async def cb_Payment(callback: types.CallbackQuery):
         chat_id=callback.from_user.id,
         title='Advisor',
         description='Этот бот поможет вам быстрее находить бумаги, отвечающие вашим требованиям.',
+        start_parameter="one-month-subscription",
         payload='Payload',
         provider_token=YOOKASSA_PROVIDER_TOKEN,
         currency='rub',
@@ -30,6 +31,7 @@ async def cb_Payment(callback: types.CallbackQuery):
         photo_size=100,
         photo_width=800,
         photo_height=450,
+        is_flexible=False,
         reply_markup=None
     )
 

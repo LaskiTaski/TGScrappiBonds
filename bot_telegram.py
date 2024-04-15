@@ -10,7 +10,6 @@ storage = MemoryStorage()
 ABSOLUTE_PATH = os.getenv('ABSOLUTE_PATH')
 TOKEN = os.getenv('TOKEN_API')
 YOOKASSA_PROVIDER_TOKEN = os.getenv('YOOKASSA_PROVIDER_TOKEN')
-SBERBANK_PROVIDER_TOKEN = os.getenv('SBERBANK_PROVIDER_TOKEN')
 
 bot = Bot(token=TOKEN, parse_mode='Markdown')
 dp = Dispatcher(bot, storage=storage)
